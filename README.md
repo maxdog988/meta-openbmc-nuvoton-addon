@@ -57,7 +57,6 @@ BBLAYERS ?= " \
     + [OBMC iKVM](#obmc-ikvm)
     + [SOL](#sol)
     + [VM](#vm)
-    + [Event Log Dump](#event-log-dump)
   * [System](#system)
     + [User Management](#user-management)
     + [Time](#time)
@@ -65,6 +64,7 @@ BBLAYERS ?= " \
   * [IPMI / DCMI](#ipmi---dcmi)
     + [SOL IPMI](#sol-ipmi)
     + [Message Bridging](#message-bridging)
+  * [JTAG master](#jtag-master)
 - [IPMI Comamnds Verified](#ipmi-comamnds-verified)
 - [Modifications](#modifications)
 
@@ -226,10 +226,9 @@ It's verified with Nuvoton's NPCM750 solution (which is referred as Poleg here) 
 **Maintainer**
 
 * Tyrone Ting
-* Stanley Chu
 
 ### VM
-<img align="right" width="30%" src="https://cdn.rawgit.com/NTC-CCBG/snapshots/e8178eef/openbmc/vm-own.png">
+<img align="right" width="30%" src="https://cdn.rawgit.com/NTC-CCBG/snapshots/1ecfa33/openbmc/vm-own.png">
 
 Virtual Media (VM) is to emulate an USB drive on remote host PC via Network Block Device(NBD) and Mass Storage(MSTG).
 
@@ -247,19 +246,19 @@ Virtual Media (VM) is to emulate an USB drive on remote host PC via Network Bloc
       ```
       dd if=/dev/sda of=usb.img bs=1M count=100
       ```
-      > **bs** here is block size and **count** is block count.
+      > _**bs** here is block size and **count** is block count._
       > 
-      > For example, if the size of your usb drive is 1GB, then you could set "bs=1M" and "count=1024"
+      > _For example, if the size of your usb drive is 1GB, then you could set "bs=1M" and "count=1024"_
 
     * For Windows - use tool like **Win32DiskImager.exe**
 
-    > NOTICE : A simple *.iso file cannot work for this.
+    > _NOTICE : A simple *.iso file cannot work for this._
  
 2. Switch to webpage of VM on your browser
     ```
     https://XXX.XXX.XXX.XXX/#/vm
     ```
-    > Please login to BMC first.
+    > _Please login to BMC first._
 
 3. Operations of VM
     * After `Chose File`, click `Start VM` to start VM network service (still not hook USB disk to host platform)
@@ -269,8 +268,6 @@ Virtual Media (VM) is to emulate an USB drive on remote host PC via Network Bloc
 
 **Maintainer**
 * Medad CChien
-
-### Event Log Dump
 
 ## System
 
@@ -283,8 +280,7 @@ Virtual Media (VM) is to emulate an USB drive on remote host PC via Network Bloc
     
     **systemd-timesyncd** is a daemon that has been added for synchronizing the system clock across the network. It implements an **SNTP (Simple NTP)** client. This daemon runs with minimal privileges, and has been hooked up with **systemd-networkd** to only operate when network connectivity is available.
         
-    The modification time of this file indicates the timestamp of the last successful synchronization (or at least the **systemd build date**, in case synchronization was not possible).
-    > _/var/lib/systemd/timesync/clock_
+    The modification time of the file **/var/lib/systemd/timesync/clock** indicates the timestamp of the last successful synchronization (or at least the **systemd build date**, in case synchronization was not possible).
     
     **Source URL**
     * [https://github.com/systemd/systemd/tree/master/src/timesync](https://github.com/systemd/systemd/tree/master/src/timesync)
@@ -404,9 +400,145 @@ Virtual Media (VM) is to emulate an USB drive on remote host PC via Network Bloc
     ```
     timedatectl list-timezones
     ```
+**Maintainer**  
+* Tim Li
+
 ### Sensor
-  * Enabled Sensor Types
-  * Event Generation
+<img align="right" width="30%" src="https://raw.githubusercontent.com/NTC-CCBG/snapshots/e1d1733/openbmc/sensor.png">  
+
+[phosphor-hwmon](https://github.com/openbmc/phosphor-hwmon) daemon will periodically check the sensor reading to see if it exceeds lower bound or upper bound . If alarm condition is hit and event generating option is on, it calls [phosphor-logging](https://github.com/openbmc/phosphor-logging) API to generate a **Log entry**.  
+Later on, ipmi tool on host side can send IPMI command to BMC to get SEL events, [phosphor-host-ipmid](https://github.com/openbmc/phosphor-host-ipmid) will convert the **Log entries** to SEL record format and reply to host.  
+
+**Source URL**
+* [https://github.com/Nuvoton-Israel/meta-openbmc-nuvoton-addon/recipes-phosphor/dbus](https://github.com/Nuvoton-Israel/meta-openbmc-nuvoton-addon/tree/openbmc-master/recipes-phosphor/dbus)
+* [https://github.com/Nuvoton-Israel/meta-openbmc-nuvoton-addon/recipes-phosphor/ipmi](https://github.com/Nuvoton-Israel/meta-openbmc-nuvoton-addon/tree/openbmc-master/recipes-phosphor/ipmi)
+* [https://github.com/Nuvoton-Israel/meta-openbmc-nuvoton-addon/recipes-phosphor/sensors](https://github.com/Nuvoton-Israel/meta-openbmc-nuvoton-addon/tree/openbmc-master/recipes-phosphor/sensors)
+
+
+**How to use**
+
+* **Configure sensor and event generator**
+
+  * Add Inventory of Sensors
+
+     **Inventory of Sensors** is a map table that defines all types of SEL event BMC can generate. It is constructed from a yaml file, [recipes-phosphor/ipmi/phosphor-ipmi-inventory-sel/config.yaml](https://github.com/openbmc/meta-phosphor/blob/master/recipes-phosphor/ipmi/phosphor-ipmi-inventory-sel/config.yaml)  
+
+     Below is a sample **config.yaml** for Poleg EVB:
+       ```
+       /xyz/openbmc_project/inventory/system:
+         sensorID: 0x01
+         sensorType: 0x12
+         eventReadingType: 0x6F
+         offset: 0x02
+       /xyz/openbmc_project/sensors/temperature/temp1/critical_high:
+         sensorID: 0x02
+         sensorType: 0x01
+         eventReadingType: 0x01
+         offset: 0x09
+       /xyz/openbmc_project/sensors/temperature/temp1/critical_low:
+         sensorID: 0x02
+         sensorType: 0x01
+         eventReadingType: 0x01
+         offset: 0x02
+       /xyz/openbmc_project/sensors/temperature/temp2/critical_high:
+         sensorID: 0x03
+         sensorType: 0x01
+         eventReadingType: 0x01
+         offset: 0x09
+       /xyz/openbmc_project/sensors/temperature/temp2/critical_low:
+         sensorID: 0x03
+         sensorType: 0x01
+         eventReadingType: 0x01
+         offset: 0x02    
+       ```
+       > _Please refer to  **Sensor and Event Code Tables** in IPMI 2.0 spec for definition of sensorID, sensorType,  eventReadingType, and offset_  
+     
+     It defines 4 events which could be generated by 2 temperature sensors on Poleg EVB : 
+
+       Name    | SensorID | SensorType  | EventType | Event Description
+       ------- | ----- | ------------- | ------------------- | --------
+       temp1   | 2  | Temperature   | Threshold | Upper Critical - going high
+	   temp1   | 2  | Temperature   | Threshold | Lower Critical - going low
+       temp2   | 3  | Temperature   | Threshold | Upper Critical - going high
+	   temp2   | 3  | Temperature   | Threshold | Lower Critical - going low
+    
+  * Add Sensor Configuration File
+  
+    Each sensor has a [config file](https://github.com/Nuvoton-Israel/meta-openbmc-nuvoton-addon/tree/openbmc-master/recipes-phosphor/sensors/phosphor-hwmon%25/obmc/hwmon/apb) that defines the sensor name and its warning or critical thresholds. These files are located under **recipes-phosphor/sensors/phosphor-hwmon%/obmc/hwmon/apb/**.  
+
+    Below is config for a LM75 sensor on Poleg EVB. The sensor type is **temperature** and its name is **temp2**. It has warning thresholds for **upper** and **lower** bound. The event generating option is also enabled for **WARNHI** and **WARNLO** threshold that forcing the sensor alarm to be recorded in a D-Bus object.
+      ```
+      LABEL_temp1=temp2
+      WARNLO_temp1=28500
+      WARNHI_temp1=31000
+      EVENT_temp1=WARNHI,WARNLO
+      ```
+
+  * Modify D-Bus Sensor Error Metadata interface  
+  
+    Modify the file [Threshold.metadata.yaml](https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/xyz/openbmc_project/Sensor/Threshold.metadata.yaml) to determine how to format the meta data of event records, like below : 
+
+      ```
+      - name: CriticalHigh
+         level: ERR
+         meta:
+           - str: "SENSOR_DATA=%s"
+             type: string
+         inherits:
+           - xyz.openbmc_project.Common.Callout.Inventory
+      - name: CriticalLow
+        level: ERR
+        meta:
+          - str: "SENSOR_DATA=%s"
+            type: string
+        inherits:
+          - xyz.openbmc_project.Common.Callout.Inventory
+      ```
+    **xyz.openbmc_project.Common.Callout.Inventory** is inherited here in order to include **CALLOUT_INVENTORY_PATH** into phosphor-logging Log entry.
+
+* **Dump events**
+
+  * Using WebUI  
+  
+    In `Event log` page of **WebUI**, the event may contain a related item like below.
+    * **CALLOUT_INVENTORY_PATH** means it has association info in **Inventory of Sensors** table and **/xyz/openbmc_project/sensors/temperature/temp2/critical_high** is the key to this map table.  
+    * **SENSOR_DATA** is the sensor reading while the event is recorded.  
+
+      ```
+       CALLOUT_INVENTORY_PATH=/xyz/openbmc_project/sensors/temperature/temp2/critical_high SENSOR_DATA=31000 _PID=2531
+      ```
+
+  * Using IPMI
+    
+    Use IPMI utilities like **ipmitool** to send command for getting SEL records.  
+    ```
+    $ sudo ipmitool sel list
+    
+       1 | 10/04/2018 | 07:08:54 | Temperature #0x03 | Lower Critical going low  | Asserted
+       2 | 10/04/2018 | 07:10:39 | Temperature #0x03 | Lower Critical going low  | Asserted
+       3 | 10/04/2018 | 07:28:04 | Temperature #0x03 | Upper Critical going high | Asserted
+       4 | 10/04/2018 | 07:28:11 | Temperature #0x03 | Upper Critical going high | Asserted
+       5 | 10/04/2018 | 07:28:13 | Temperature #0x03 | Upper Critical going high | Asserted
+       6 | 10/04/2018 | 07:46:34 | Temperature #0x03 | Upper Critical going high | Asserted
+       7 | 10/04/2018 | 07:46:38 | Temperature #0x03 | Upper Critical going high | Asserted
+       8 | 10/04/2018 | 07:46:43 | Temperature #0x03 | Upper Critical going high | Asserted
+       9 | 10/04/2018 | 07:46:59 | Temperature #0x03 | Upper Critical going high | Asserted
+       a | 10/04/2018 | 07:47:24 | Temperature #0x03 | Upper Critical going high | Asserted
+       b | 10/04/2018 | 07:47:29 | Temperature #0x03 | Upper Critical going high | Asserted
+       c | 10/04/2018 | 07:47:42 | Temperature #0x03 | Upper Critical going high | Asserted
+       d | 10/04/2018 | 07:48:37 | Temperature #0x03 | Upper Critical going high | Asserted
+       e | 10/04/2018 | 07:48:39 | Temperature #0x03 | Upper Critical going high | Asserted
+       f | 10/04/2018 | 07:48:53 | Temperature #0x03 | Upper Critical going high | Asserted
+      10 | 10/04/2018 | 09:19:11 | Temperature #0x03 | Lower Critical going low  | Asserted
+      11 | 10/04/2018 | 09:20:22 | Temperature #0x03 | Lower Critical going low  | Asserted
+      12 | 10/04/2018 | 09:20:24 | Temperature #0x03 | Lower Critical going low  | Asserted
+      13 | 10/04/2018 | 09:33:24 | Temperature #0x03 | Upper Critical going high | Asserted
+      14 | 10/04/2018 | 09:33:31 | Temperature #0x03 | Upper Critical going high | Asserted
+    ```
+ 
+**Maintainer**
+
+* Stanley Chu 
 
 ## IPMI / DCMI
 
@@ -690,6 +822,73 @@ It's verified with Nuvoton's NPCM750 solution (which is referred as Poleg here) 
 * Stanley Chu
 * Tyrone Ting
 
+## jtag master
+JTAG master is implemented as Jtag master function on Poleg EVB.
+
+**How to use**
+
+1. Prepare a Poleg EVB and a target board (in our test, we use NUC950).
+2. Connect pins of Jtag on NUC950 to Poleg EVB:
+    * Connect Jtag TCK pin to pin2 of J11 on Poleg EVB.
+    * Connect Jtag TDI pin to pin8 of J11 on Poleg EVB.
+    * Connect Jtag TDO pin to pin7 of J11 on Poleg EVB.
+    * Connect Jtag TMS pin to pin10 of J11 on Poleg EVB.
+    * Jtag RST pin is optional.
+3. Prepare Jtag driver module and Jtag socket svc deamon:
+    * Jtag driver module
+      * In the build machine, build module by:
+        ```
+        bitbake jtag-driver
+        ```
+      * Copy generated module "jtag_drv.ko" to Poleg EVB. "jtag_drv.ko" should be located at \<openbmc folder\>/build/tmp/work/evb_npcm750-openbmc-linux-gnueabi/jtag-driver/\<version\>/
+    * Jtag socket svc daemon:
+      * In the build machine, build daemon by:
+        ```
+        bitbake jtag-socket-svc
+        ```
+      * Copy generated daemon "jtag_socket_svc" to Poleg EVB. "jtag_socket_svc" should be loacted at \<openbmc folder\>/build/tmp/work/jtag-socket-svc/\<version\>/image/usr/bin/
+4. Prepare a guest PC and jtag client tool which will send At scale debug commands to daemon "jtag_socket_svc" on Poleg EVB via ethernet.
+    * Here is an example jtag client tool for NUC950 (target board)
+      * Download the example tool from https://github.com/Nuvoton-Israel/jtag_socket_client_arm
+      * Make sure that python3 is installed on the guest PC.
+5. Configure the ethernet communication between Poelg EVB and a guest PC:
+    * Connect an ethernet cable between your workstation and J12 header of Poleg EVB.
+    * Configure guest PC' ip address to 192.168.2.101 and the netmask to 255.255.255.0 as an example here.
+    * Configure Poleg EVB ip address to 192.168.2.100 and the netmask to 255.255.255.0. For example, input the following command in the terminal connected to Poleg EVB on your workstation and press enter key.
+      ```
+      ifconfig eth2 192.168.2.100 netmask 255.255.255.0
+      ```
+6. Run Jtag socket svc daemon:
+    * Insert Jtag driver module at first by inputing the following command in the terminal connected to Poleg EVB:
+      ```
+      insmod jtag_drv.ko
+      ```
+    * Run daemon "jtag_socket_svc" by inputing the following command in the terminal connected to Poleg EVB:
+      ```
+      ./jtag_socket_svc
+      ```
+    * Make sure the NUC950(target board) is powered on and Jtag connection is ready.
+    * Control NUC950(target board) via Jtag by jtag client tool on guest PC:
+      * Launch client jtag tool
+        ```
+        python jtag_client.py
+        ```
+      * List commands the jtag client tool supports:
+        ```
+        jtag_client>>>?
+        ```
+      * Halt the target board:
+        ```
+        jtag_client>>>halt
+        ```
+      * Restore the target board:
+        ```
+        jtag_client>>>go
+        ```
+**Maintainer**
+* Ray Lin
+* Stanley Chu
+
 # IPMI Comamnds Verified
 
 | Command | KCS | RMCP+ | IPMB |
@@ -869,3 +1068,6 @@ It's verified with Nuvoton's NPCM750 solution (which is referred as Poleg here) 
 * 2018.09.14 First release VM
 * 2018.09.14 Update IPMI Commands Verified Table
 * 2018.09.21 Add NTP screen snapshot for System/Time/SNTP
+* 2018.10.05 Update webui and  patch of webui and interface and vm-own.png
+* 2018.10.08 Add JTAG master
+* 2018.10.11 Add Sensor
