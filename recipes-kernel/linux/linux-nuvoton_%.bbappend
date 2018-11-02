@@ -15,6 +15,7 @@ SRC_URI += "file://0002-nbd-fix-reconnect.patch"
 SRC_URI += "file://enable-configfs-mstg.cfg"
 SRC_URI += "file://0001-dts-jtag-npcm-add-gpios-for-jtag_drv.patch"
 SRC_URI += "file://0001-FAN-Fix-RPM-convert-formula-from-fan-count.patch"
+SRC_URI += "file://0001-modify-mtd-partion.patch"
 
 LINUX_VERSION_EXTENSION = "-${SRCREV}"
 PV = "${LINUX_VERSION}+git${SRCPV}"
