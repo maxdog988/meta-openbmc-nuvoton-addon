@@ -82,5 +82,5 @@ do_generate_static() {
 	ln -sf rwfs.${OVERLAY_BASETYPE} ${IMGDEPLOYDIR}/image-rwfs
 }
 
-IMAGE_INSTALL_append = "obmc-ikvm phosphor-webui virtual-obmc-host-ipmi-kcs phosphor-ipmi-net phosphor-ipmi-ipmb phosphor-ipmi-host nbd-client\
+IMAGE_INSTALL_append = "obmc-ikvm phosphor-webui virtual-obmc-host-ipmi-kcs phosphor-ipmi-net phosphor-ipmi-ipmb phosphor-ipmi-host nbd-client bmcweb\
                         "
