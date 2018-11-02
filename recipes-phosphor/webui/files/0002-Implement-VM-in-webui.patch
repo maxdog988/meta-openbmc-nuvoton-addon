@@ -1,14 +1,26 @@
-commit 5b1bbba0cbc7840554191fff8bac9c44a1923922
-Author: Medad <ctcchien@nuvoton.com>
-Date:   Thu Oct 4 14:10:48 2018 +0800
+From 2fc38dccb74567d83ab859dcca3d99d06b13cff6 Mon Sep 17 00:00:00 2001
+From: kwliu <kwliu@nuvoton.com>
+Date: Fri, 2 Nov 2018 10:16:40 +0800
+Subject: [PATCH 2/2] Implement VM in webui
 
-    [PATCH] Implement VM in webui
+Change-Id: I8b03f2a356d16ae028d9791a7d54aac8d90f0236
+---
+ app/index.js                          |   5 +-
+ app/vm/controllers/nbd/nbd.js         | 360 ++++++++++++++++++++++++++
+ app/vm/controllers/vm-controller.html |  25 ++
+ app/vm/controllers/vm-controller.js   | 105 ++++++++
+ app/vm/index.js                       |  28 ++
+ 5 files changed, 522 insertions(+), 1 deletion(-)
+ create mode 100644 app/vm/controllers/nbd/nbd.js
+ create mode 100644 app/vm/controllers/vm-controller.html
+ create mode 100644 app/vm/controllers/vm-controller.js
+ create mode 100644 app/vm/index.js
 
 diff --git a/app/index.js b/app/index.js
-index 6418deb..2ce1646 100644
+index 8a9dbae..b908dfb 100644
 --- a/app/index.js
 +++ b/app/index.js
-@@ -89,6 +89,9 @@ import phosphor_templates from './templates.js';
+@@ -86,6 +86,9 @@ import phosphor_templates from './templates.js';
  import kvm_index from './kvm/index.js';
  import kvm_controller from './kvm/controllers/kvm-controller.js';
  
@@ -18,10 +30,10 @@ index 6418deb..2ce1646 100644
  window.angular && (function(angular) {
    'use strict';
  
-@@ -106,7 +109,7 @@ window.angular && (function(angular) {
+@@ -102,7 +105,7 @@ window.angular && (function(angular) {
+             // Model resources
              'app.login', 'app.overview', 'app.serverControl',
              'app.serverHealth', 'app.configuration', 'app.users', 'app.redfish',
-             'app.multiServer',
 -            'app.kvm'
 +            'app.kvm', 'app.vm'
            ])
@@ -395,7 +407,7 @@ index 0000000..c5997c4
 +
 diff --git a/app/vm/controllers/vm-controller.html b/app/vm/controllers/vm-controller.html
 new file mode 100644
-index 0000000..22e99a4
+index 0000000..1a2eabf
 --- /dev/null
 +++ b/app/vm/controllers/vm-controller.html
 @@ -0,0 +1,25 @@
@@ -570,3 +582,6 @@ index 0000000..c86dfc8
 +})(window.angular);
 +
 +
+-- 
+2.17.1
+
