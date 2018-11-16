@@ -60,13 +60,14 @@ This is a Virtual Network Computing (VNC) server programm using [LibVNCServer](h
 3. Support USB HID, support Keyboard and Mouse.
 
 The VNC viewer also enabled in webui with below patches.
-1. [Implement KVM in webui using novnc module](https://github.com/Nuvoton-Israel/meta-openbmc-nuvoton-addon/blob/openbmc-master/recipes-phosphor/webui/files/0001-Implement-KVM-in-webui.patch)
+1. [Implement KVM in webui using novnc module](https://github.com/Nuvoton-Israel/openbmc/tree/master/meta-evb/meta-evb-nuvoton/meta-evb-npcm750/recipes-phosphor/webui/files/0001-Implement-KVM-in-webui.patch)
 	* This patch is provided by [Ed tanous](ed@tanous.net).
-2. [Remove sending sec-websocket-protocol in novnc module](https://github.com/Nuvoton-Israel/meta-openbmc-nuvoton-addon/blob/openbmc-master/recipes-phosphor/webui/phosphor-webui%25.bbappend)
+2. [Remove sending sec-websocket-protocol in novnc module](https://github.com/Nuvoton-Israel/openbmc/tree/master/meta-evb/meta-evb-nuvoton/meta-evb-npcm750/recipes-phosphor/webui)
 
 **Source URL**
 
 * [https://github.com/Nuvoton-Israel/obmc-ikvm](https://github.com/Nuvoton-Israel/obmc-ikvm)
+* [https://github.com/Nuvoton-Israel/openbmc/tree/master/meta-evb/meta-evb-nuvoton/meta-evb-npcm750/recipes-phosphor/interfaces](https://github.com/Nuvoton-Israel/openbmc/tree/master/meta-evb/meta-evb-nuvoton/meta-evb-npcm750/recipes-phosphor/interfaces)
 
 **How to use**
 
@@ -119,7 +120,7 @@ It's verified with Nuvoton's NPCM750 solution (which is referred as Poleg here) 
 
 **Source URL**
 
-* [https://github.com/Nuvoton-Israel/meta-openbmc-nuvoton-addon/tree/openbmc-master/recipes-phosphor/console](https://github.com/Nuvoton-Israel/meta-openbmc-nuvoton-addon/tree/openbmc-master/recipes-phosphor/console)
+* [https://github.com/Nuvoton-Israel/openbmc/tree/master/meta-evb/meta-evb-nuvoton/meta-evb-npcm750/recipes-phosphor/console](https://github.com/Nuvoton-Israel/openbmc/tree/master/meta-evb/meta-evb-nuvoton/meta-evb-npcm750/recipes-phosphor/console)
 
 * [https://github.com/Nuvoton-Israel/openbmc-uefi-util/tree/npcm7xx_v2.1/sol_binary](https://github.com/Nuvoton-Israel/openbmc-uefi-util/tree/npcm7xx_v2.1/sol_binary)
 
@@ -219,9 +220,9 @@ Virtual Media (VM) is to emulate an USB drive on remote host PC via Network Bloc
 
 **Source URL**
 
-* [https://github.com/Nuvoton-Israel/meta-openbmc-nuvoton-addon/recipes-support/nbd](https://github.com/Nuvoton-Israel/meta-openbmc-nuvoton-addon/recipes-support/nbd)
-* [https://github.com/Nuvoton-Israel/meta-openbmc-nuvoton-addon/recipes-kernel/linux](https://github.com/Nuvoton-Israel/meta-openbmc-nuvoton-addon/recipes-kernel/linux)
-* [https://github.com/Nuvoton-Israel/meta-openbmc-nuvoton-addon/recipes-phosphor/interfaces](https://github.com/Nuvoton-Israel/meta-openbmc-nuvoton-addon/recipes-phosphor/interfaces)
+* [https://github.com/Nuvoton-Israel/openbmc/tree/master/meta-evb/meta-evb-nuvoton/meta-evb-npcm750/recipes-support/nbd](https://github.com/Nuvoton-Israel/openbmc/tree/master/meta-evb/meta-evb-nuvoton/meta-evb-npcm750/recipes-support/nbd)
+* [https://github.com/Nuvoton-Israel/openbmc/blob/master/meta-evb/meta-evb-nuvoton/meta-evb-npcm750/recipes-kernel/linux/linux-nuvoton/0002-nbd-fix-reconnect.patch](https://github.com/Nuvoton-Israel/openbmc/blob/master/meta-evb/meta-evb-nuvoton/meta-evb-npcm750/recipes-kernel/linux/linux-nuvoton/0002-nbd-fix-reconnect.patch)
+* [https://github.com/Nuvoton-Israel/openbmc/tree/master/meta-evb/meta-evb-nuvoton/meta-evb-npcm750/recipes-phosphor/interfaces](https://github.com/Nuvoton-Israel/openbmc/tree/master/meta-evb/meta-evb-nuvoton/meta-evb-npcm750/recipes-phosphor/interfaces)
 * [https://github.com/Nuvoton-Israel/meta-openbmc-nuvoton-addon/recipes-phosphor/webui](https://github.com/Nuvoton-Israel/meta-openbmc-nuvoton-addon/recipes-phosphor/webui)
 
 **How to use**
