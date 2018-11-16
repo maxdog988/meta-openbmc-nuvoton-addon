@@ -1,12 +1,11 @@
 # Nuvoton NPCM750 Evaluation Board
-================
-
 This is the Nuvoton NPCM750 evaluation board layer.
 The NPCM750 is an ARM based SoC with external DDR RAM and
 supports a large set of peripherals made by Nuvoton.
 More information about the NPCM7XX can be found
 [here](http://www.nuvoton.com/hq/products/cloud-computing/ibmc/?__locale=en).
 
+- Work with [openbmc master branch](https://github.com/openbmc/openbmc/tree/master "openbmc master branch")
 - Work with [NTIL linux 4.17.04 for Poleg](https://github.com/Nuvoton-Israel/linux/tree/Poleg-4.17.04-OpenBMC "NTIL")
 
 # Dependencies
@@ -23,8 +22,6 @@ This layer depends on:
 
 Please submit any patches against the NPCM750 evaluation board layer to the maintainer of nuvoton:
 
-* Avi Fishman, <avi.fishman@nuvoton.com> 
-* Tomer Mainmon, <tomer.maimon@nuvoton.com>
 * Oshri Alkob, <oshri.alkoby@nuvoton.com>
 * Joseph Liu, <KWLIU@nuvoton.com>
 * Medad CChien, <CTCCHIEN@nuvoton.com>
@@ -43,6 +40,7 @@ Please submit any patches against the NPCM750 evaluation board layer to the main
     + [VM](#vm)
   * [System](#system)
     + [User Management](#user-management)
+    + [Time](#time)
     + [Sensor](#sensor)
   * [IPMI / DCMI](#ipmi---dcmi)
     + [SOL IPMI](#sol-ipmi)
@@ -583,299 +581,6 @@ It's verified with Nuvoton's NPCM750 solution (which is referred as Poleg here) 
 * Tyrone Ting
 * Stanley Chu
 
-### Message Bridging
-
-BMC Message Bridging provides a mechanism for routing IPMI Messages between different media.
-
-Please refer to [IPMI Website](https://www.intel.com/content/www/us/en/servers/ipmi/ipmi-home.html) for details about Message Bridging.
-
-  * KCS to IPMB
-  <img align="right" width="30%" src="https://cdn.rawgit.com/NTC-CCBG/icons/522a8e05/kcs2ipmb.png">
-  
-The command "Send Message" is used to routing IPMI messages from KCS to IPMB via System Interface.
-
-Later, the response to the bridged request is received by the BMC and routed into the Receive Message Queue and it is retrieved using a Get Message command.
-
-The patch integrates the [kcsbridge](https://github.com/openbmc/kcsbridge), [ipmid](https://github.com/openbmc/phosphor-host-ipmid) and [ipmbbridge](https://gerrit.openbmc-project.xyz/#/c/openbmc/ipmbbridge/+/11130/) projects.
-
-It's verified with Nuvoton's NPCM750 solution (which is referred as Poleg here) and Supermicro MBD-X9SCL-F-0.
-
-**Source URL**
-
-* [https://github.com/Nuvoton-Israel/meta-openbmc-nuvoton-addon/tree/openbmc-master/recipes-phosphor/image](https://github.com/Nuvoton-Israel/meta-openbmc-nuvoton-addon/tree/openbmc-master/recipes-phosphor/image)
-* [https://github.com/Nuvoton-Israel/meta-openbmc-nuvoton-addon/tree/openbmc-master/recipes-phosphor/ipmi](https://github.com/Nuvoton-Israel/meta-openbmc-nuvoton-addon/tree/openbmc-master/recipes-phosphor/ipmi)
-* [https://github.com/Nuvoton-Israel/meta-openbmc-nuvoton-addon/tree/openbmc-master/recipes-kernel/linux](https://github.com/Nuvoton-Israel/meta-openbmc-nuvoton-addon/tree/openbmc-master/recipes-kernel/linux)
-
-**How to use**
-
-1. The user is expected to know how to follow the instructions in the section **Setting up your OpenBMC project** in [Nuvoton-Israel/openbmc](https://github.com/Nuvoton-Israel/openbmc) to build and program an OpenBMC image into Poleg EVBs.  
-    * Prepare a PC (which is referred as a build machine here) for building and programming the OpenBMC image.  
-      > _The user is also expected to have general knowledge of ACPI/UEFI and know how to update the DSDT table in linux and build/update a linux kernel/driver._  
-
-2. Prepare two Nuvoton Poleg EVBs. One is named Poleg EVB A and the other is Poleg EVB B.
-
-    * Connect **pin 3-4** of J4 on Poleg EVB A with corresponding pins of J4 on Poleg EVB B, **one on one**.  
-    * Connect **pin 12** of J3 on Poleg EVB A with corresponding pin of J3 on Poleg EVB B, **one on one**.  
-    * The connection needs a **1k** resistor and a **3.3v** supply from Poleg EVB A.  
-      > _The component name of 3.3v supply is P4._
-
-3. Follow instructions from step-1, step-2, step-3 and step-5 in [SOL](#sol) **How to use** section to set up your workstation, Poleg EVB A and Supermicro MBD-X9SCL-F-0.  
-    > _Follow instructions from step-1 and step-5 in [SOL](#sol) **How to use** section to set up Poleg EVB B_.  
-
-4. Install Ubuntu 14.04 64bit on Supermicro MBD-X9SCL-F-0 for the verification and login as a normal user.  
-    > _The user is required to own root privileges on Ubuntu._
-
-5. Poleg EVB A is configured to have its own slave address **0x10**. Poleg EVB B is configured to have its own slave address **0x58**.
-
-    > _Poleg EVB A treats Poleg EVB B as its attached device on SMBUS/I2C bus and vice versa._
-
-6. In the build machine, download [Nuvoton-Israel/openbmc](https://github.com/Nuvoton-Israel/openbmc) git repository.  
-
-    * Download [Nuvoton-Israel/meta-openbmc-nuvoton-addon](https://github.com/Nuvoton-Israel/meta-openbmc-nuvoton-addon) under the just-retrieved openbmc directory and follow the instructions in the section **[Usage](https://github.com/Nuvoton-Israel/meta-openbmc-nuvoton-addon#usage)**.  
-    * Follow the instructions in the section **Setting up your OpenBMC project** of of [Nuvoton-Israel/openbmc](https://github.com/Nuvoton-Israel/openbmc) to build and program an OpenBMC image for Poleg EVB A.  
-
-7. Download patches to meet the requirement of step-5 for Poleg EVB B.
-
-    * Download [0001-i2c-npcm750-enable-I2C-slave-support.patch](https://github.com/Nuvoton-Israel/meta-openbmc-nuvoton-addon/blob/openbmc-master/recipes-patches/recipes-kernel/linux/0001-i2c-npcm750-enable-I2C-slave-support.patch) and overwrite the same original file located under **meta-openbmc-nuvoton-addon/recipes-kernel/linux/files** folder in the downloaded openbmc directory of the build machine.  
-    * In the build machine, rebuild the linux kernel for OpenBMC. As an example, enter the following command in a terminal window (build environment is configured in advance):  
-      ```
-      bitbake -C fetch virtual/kernel
-      ```
-
-    * Download [kcs_to_ipmb_message_bridging.patch](https://github.com/Nuvoton-Israel/meta-openbmc-nuvoton-addon/blob/openbmc-master/recipes-patches/recipes-phosphor/ipmi/phosphor-ipmi-ipmb/kcs_to_ipmb_message_bridging.patch) under the **meta-openbmc-nuvoton-addon/recipes-phosphor/ipmi/phosphor-ipmi-ipmb** folder in the downloaded openbmc directory of the build machine.  
-    * In the build machine, open a terminal window and navigate to the **meta-openbmc-nuvoton-addon/recipes-phosphor/ipmi/phosphor-ipmi-ipmb** folder in the downloaded openbmc directory.  
-    * Enter the following command in the terminal window in the build machine.  
-      ```
-      patch -p1 < ./kcs_to_ipmb_message_bridging.patch
-      ```
-
-    * In the build machine, rebuild the ipmbbridge for OpenBMC. As an example, enter the following command in a terminal window (build environment is configured in advance):  
-      ```
-      bitbake -C fetch phosphor-ipmi-ipmb
-      ```
-
-    * In the build machine, rebuild the OpenBmc image. As an example, enter the following two commands in a terminal window (build environment is configured in advance):  
-      ```
-      bitbake obmc-phosphor-image -c cleansstate  
-      bitbake obmc-phosphor-image
-      ```
-
-    * Follow the section **Programming the images** of [Nuvoton-Israel/openbmc](https://github.com/Nuvoton-Israel/openbmc) to program the updated image into Poleg EVB B.
-
-8. Modify the system interface driver in Ubuntu 14.04 on Supermicro MBD-X9SCL-F-0 to communicate with Poleg EVB A.
-
-    * Download the kernel source code of Ubuntu 14.04 on Supermicro MBD-X9SCL-F-0 and locate the system interface driver source code.  
-    * Locate the code in the function **init_ipmi_si** of ipmi_si_intf.c.
-      ```
-      enum ipmi_addr_src type = SI_INVALID;
-      ```
-
-    * Add the code next to the sentence "enum ipmi_addr_src type = SI_INVALID".
-      ```
-      return -1;
-      ```
-
-    * Rebuild the system interface driver and replace ipmi_si.ko of Ubuntu 14.04 with the one just rebuilt on Supermicro MBD-X9SCL-F-0.  
-      > _The original ipmi_si.ko is located at /lib/modules/\`$(uname -r)\`/kernel/drivvers/char/ipmi_
-
-    * Undo the "return -1" modification in the function **init_ipmi_si** of ipmi_si_intf.c.  
-      + Rebuild the system interface driver again and leave the regenerated ipmi_si.ko in the kernel source code ipmi directory for system interface driver.
-
-    * Reboot Ubuntu 14.04 on Supermicro MBD-X9SCL-F-0.
-
-9. Update the DSDT table in Ubuntu 14.04 on Supermicro MBD-X9SCL-F-0.  
-
-    * Study the section **How to build a custom DSDT into an initrd** of [overriding-dsdt](https://01.org/zh/linux-acpi/documentation/overriding-dsdt) and [initrd_table_override.txt](https://www.kernel.org/doc/Documentation/acpi/initrd_table_override.txt) to override DSDT in the initrd image of Ubuntu 14.04 and rebuild the Ubuntu kernel on Supermicro MBD-X9SCL-F-0.
-    * In the DSDT table, update the OEMRevision field in DefinitionBlock.  
-    * In the DSDT table, create two objects used for accessing Poleg EVB A KCS devices via 0x4E, 0x4F.  
-      ```
-      Name (IDTP, 0x0CA4)  
-      Name (ICDP, 0x0CA5)  
-      ```
-
-    * Locate the code section like below.  
-      ```
-      Device (SPMI)
-      {
-          ...
-          Name (_STR, Unicode ("IPMI_KCS"))  
-          Name (_UID, Zero)
-      ```
-    * Add the codes below following the sentence "Name (_UID, Zero)".  
-      ```
-      OperationRegion (IPST, SystemIO, ICDP, One)
-      Field (IPST, ByteAcc, NoLock, Preserve)
-      {
-          STAS,   8
-      }
-      ```
-
-    * Locate the code section like below in the same SPMI code section just mentioned.  
-      ```
-      Method (_STA, 0, NotSerialized)
-      ...
-      If (LEqual (Local0, 0xFF))
-      {
-      ...
-      ```
-    * Add the codes below inside the "If" sentence scope.
-      ```
-      Store (0x11, LDN)
-      Store (0x1,  ACTR)
-      Store (0x0C, IOAH)
-      Store (0xA4, IOAL)
-      Store (0x0C, IOH2)
-      Store (0xA5, IOL2)
-      ```
-
-    * Rebuild the modified DSDT table and regenerate the initrd image of Ubuntu 14.04 on Supermicro MBD-X9SCL-F-0.  
-    * Reboot Supermicro MBD-X9SCL-F-0 to load the overriden DSDT.
-
-10. (Optional)Create shell scripts in Ubuntu 14.04 on Supermicro MBD-X9SCL-F-0.
-
-    * The scripts here are just for convenience and for reference.  
-    * Download and build [ioport-1.2.tar.gz](https://people.redhat.com/rjones/ioport/files/ioport-1.2.tar.gz).  
-      + Locate the generated **outb** executive.
-    * Create a script named "kcs_switch.sh" for example to configure the access to the kcs device of Poleg EVB A from Supermicro MBD-X9SCL-F-0.  
-    * The user needs to modify the path to the outb executive in the script (kcs_switch.sh) below.  
-      ```
-      #!/bin/sh
-      outb 0x4e 0x07
-      outb 0x4f 0x11
-
-      outb 0x4e 0x30
-      outb 0x4f 0x1
-
-      outb 0x4e 0x60
-      outb 0x4f 0x0C
-      outb 0x4e 0x61
-      outb 0x4f 0xA4
-      outb 0x4e 0x62
-      outb 0x4f 0x0C
-      outb 0x4e 0x63
-      outb 0x4f 0xA5
-      ```
-
-     * Create a script name "insert_ipmi_mod.sh" for example to use the regenerated KCS driver in the kernel source code ipmi directory metioned in step-8.  
-     * The user needs to modify the path to the KCS driver in insert_ipmi_mod.sh below.  
-
-       ```
-       #!/bin/sh
-       sudo insmod ./ipmi_devintf.ko
-       sudo insmod ./ipmi_si.ko
-       ```
-
-    * Make sure that two scripts above are executable.
-
-11. Install the ipmiutil in Ubuntu 14.04 on Supermicro MBD-X9SCL-F-0.
-
-    * Download, extract, build and install [ipmiutil-3.1.2.tar.gz](http://sourceforge.net/projects/ipmiutil/files/ipmiutil-3.1.2.tar.gz).  
-    * Open a terminal window and navigate to the extracted folder of ipmiutil-3.1.2.tar.gz.  
-    * Input the following command in the terminal window.
-      ```
-      sudo ./scripts/ipmi_if.sh
-      ```
-    * This generates /var/lib/ipmiutil/ipmi_if.txt.  
-    * Edit /var/lib/ipmiutil/ipmi_if.txt with the root privilege. 
-    * The value for "Base Address:" is **0x0000000000000CA2 (I/O)** and modify it to **0x0000000000000CA4 (I/O)**.
-
-12. Test message bridging.
-
-    * Power up or reboot Poleg EVB A and Poleg EVB B. Make sure that login screens of Poleg EVBs are displayed on the terminal window (e.g. Tera Term) on your workstation.
-    * Power up or reboot Supermicro MBD-X9SCL-F-0 and login into Ubuntu 14.04 as a normal user.  
-      + Open a terminal window and execute **kcs_switch.sh** and **insert_ipmi_mod.sh** created in step-10 with the root privilege.
-      + If the scripts are not created, input the contents of **kcs_switch.sh** and **insert_ipmi_mod.sh** except the #!/bin/sh line manually.
-      + The user can use the following command in a terminal window under Ubuntu 14.04 on Supermicro MBD-X9SCL-F-0 to verify Poleg system interface.
-        ```
-        dmesg | grep -i "bmc"
-        ```
-      
-      + The user can check the man_id. For example, the man_id is **0x000000** for this case.
-    * Enter the following command in a terminal window as a normal user of Ubuntu 14.04 on Supermicro MBD-X9SCL-F-0.  
-      ```
-      sudo ipmiutil cmd 18 34 02 10 18 d8 20 0e 01 d1 -x -s -j -F kcs
-      ```
-      > _The example command in the data field of "Send Message" command is "Get Device ID"._
-
-    * Enter the following command in a terminal window as a normal user of Ubuntu 14.04 on Supermicro MBD-X9SCL-F-0.  
-      ```
-      sudo ipmiutil cmd 18 33 -x -s -j -F kcs
-      ```
-      > _The response to "Get Device ID" command might be "respData[len=26]: 1c 33 00 02 1e c2 58 00 01 00 00 00 02 03 02 00 00 00 00 00 00 00 00 00 00 a0"._
-
-
-**Maintainer**
-
-* Stanley Chu
-* Tyrone Ting
-
-## jtag master
-JTAG master is implemented as Jtag master function on Poleg EVB.
-
-**How to use**
-
-1. Prepare a Poleg EVB and a target board (in our test, we use NUC950).
-2. Connect pins of Jtag on NUC950 to Poleg EVB:
-    * Connect Jtag TCK pin to pin2 of J11 on Poleg EVB.
-    * Connect Jtag TDI pin to pin8 of J11 on Poleg EVB.
-    * Connect Jtag TDO pin to pin7 of J11 on Poleg EVB.
-    * Connect Jtag TMS pin to pin10 of J11 on Poleg EVB.
-    * Jtag RST pin is optional.
-3. Prepare Jtag driver module and Jtag socket svc deamon:
-    * Jtag driver module
-      * In the build machine, build module by:
-        ```
-        bitbake jtag-driver
-        ```
-      * Copy generated module "jtag_drv.ko" to Poleg EVB. "jtag_drv.ko" should be located at \<openbmc folder\>/build/tmp/work/evb_npcm750-openbmc-linux-gnueabi/jtag-driver/\<version\>/
-    * Jtag socket svc daemon:
-      * In the build machine, build daemon by:
-        ```
-        bitbake jtag-socket-svc
-        ```
-      * Copy generated daemon "jtag_socket_svc" to Poleg EVB. "jtag_socket_svc" should be loacted at \<openbmc folder\>/build/tmp/work/jtag-socket-svc/\<version\>/image/usr/bin/
-4. Prepare a guest PC and jtag client tool which will send At scale debug commands to daemon "jtag_socket_svc" on Poleg EVB via ethernet.
-    * Here is an example jtag client tool for NUC950 (target board)
-      * Download the example tool from https://github.com/Nuvoton-Israel/jtag_socket_client_arm
-      * Make sure that python3 is installed on the guest PC.
-5. Configure the ethernet communication between Poelg EVB and a guest PC:
-    * Connect an ethernet cable between your workstation and J12 header of Poleg EVB.
-    * Configure guest PC' ip address to 192.168.2.101 and the netmask to 255.255.255.0 as an example here.
-    * Configure Poleg EVB ip address to 192.168.2.100 and the netmask to 255.255.255.0. For example, input the following command in the terminal connected to Poleg EVB on your workstation and press enter key.
-      ```
-      ifconfig eth2 192.168.2.100 netmask 255.255.255.0
-      ```
-6. Run Jtag socket svc daemon:
-    * Insert Jtag driver module at first by inputing the following command in the terminal connected to Poleg EVB:
-      ```
-      insmod jtag_drv.ko
-      ```
-    * Run daemon "jtag_socket_svc" by inputing the following command in the terminal connected to Poleg EVB:
-      ```
-      ./jtag_socket_svc
-      ```
-    * Make sure the NUC950(target board) is powered on and Jtag connection is ready.
-    * Control NUC950(target board) via Jtag by jtag client tool on guest PC:
-      * Launch client jtag tool
-        ```
-        python jtag_client.py
-        ```
-      * List commands the jtag client tool supports:
-        ```
-        jtag_client>>>?
-        ```
-      * Halt the target board:
-        ```
-        jtag_client>>>halt
-        ```
-      * Restore the target board:
-        ```
-        jtag_client>>>go
-        ```
-**Maintainer**
-* Ray Lin
-* Stanley Chu
-
 # IPMI Comamnds Verified
 
 | Command | KCS | RMCP+ | IPMB |
@@ -1044,17 +749,13 @@ JTAG master is implemented as Jtag master function on Poleg EVB.
 * 2018.07.23 First release Remote-KVM
 * 2018.08.02 First release SOL
 * 2018.08.07 Modify Readme.md for adding description about SOL How to use
-* 2018.08.13 Update vcd and ece patch, rename remote-kvm to obmc-ikvm
 * 2018.09.07 Update SOL for WebUI and IPMI
 * 2018.09.10 Update System/Time/SNTP
-* 2018.09.11 Update KCS to IPMB part of Message Bridging
 * 2018.09.12 Update IPMI Comamnds Verified Table
 * 2018.09.13 Update Time settings of System/Time
-* 2018.09.13 Update KCS to IPMB part of Message Bridging about OpenBMC patches and Test message bridging
 * 2018.09.13 Update obmc-ikvm part for WebUI
 * 2018.09.14 First release VM
 * 2018.09.14 Update IPMI Commands Verified Table
 * 2018.09.21 Add NTP screen snapshot for System/Time/SNTP
 * 2018.10.05 Update webui and  patch of webui and interface and vm-own.png
-* 2018.10.08 Add JTAG master
 * 2018.10.11 Add Sensor
