@@ -3,8 +3,7 @@ This README file contains information on the contents of the meta-openbmc-nuvoto
 
 Please see the corresponding sections below for details.
 
-- Work with [openbmc master branch](https://github.com/openbmc/openbmc/tree/master "openbmc master branch")
-- Work with [NTIL linux 4.13.05 for Poleg](https://github.com/Nuvoton-Israel/openbmc/tree/npcm7xx_v2.1 "NTIL")
+- Work with [NTIL linux 4.17.04 for Poleg](https://github.com/Nuvoton-Israel/linux/tree/Poleg-4.17.04-OpenBMC "NTIL")
 
 # Dependencies
 ![](https://cdn.rawgit.com/maxdog988/icons/61485d57/label_openbmc_ver_master.svg) ![](https://cdn.rawgit.com/NTC-CCBG/icons/cb59d76c/label_linux_ver_4.13.05.svg)
@@ -24,34 +23,12 @@ Please submit any patches against the meta-openbmc-nuvoton-addon layer to the ma
 * Medad CChien, <CTCCHIEN@nuvoton.com>
 * Tyrone Ting, <KFTING@nuvoton.com>
 * Stanley Chu, <YSCHU@nuvoton.com>
-* Ray Lin, <CHLIN59@nuvoton.com>
 * Tim Li, <CHLI30@nuvoton.com>
-
-# How to apply this layer
-
-** Adding the meta-openbmc-nuvoton-addon layer to your build. **
-
-In order to use this layer, you need to make the build system aware of
-it.
-
-Assuming the meta-openbmc-nuvoton-addon layer exists at the top-level of your
-yocto build tree, you can add it to the build system by adding the
-location of the meta-openbmc-nuvoton-addon layer to bblayers.conf, along with any
-other layers needed. e.g.:
-```
-BBLAYERS ?= " \
-    /path/to/yocto/meta \
-    /path/to/yocto/meta-poky \
-    /path/to/yocto/meta-yocto-bsp \
-    /path/to/yocto/meta-meta-openbmc-nuvoton-addon \
-    "
-```
 
 # Table of Contents
 
 - [Dependencies](#dependencies)
 - [Contacts for Patches](#contacts-for-patches)
-- [How to apply this layer](#how-to-apply-this-layer)
 - [Enabled Features](#enabled-features)
   * [WebUI](#webui)
     + [OBMC iKVM](#obmc-ikvm)
@@ -59,12 +36,9 @@ BBLAYERS ?= " \
     + [VM](#vm)
   * [System](#system)
     + [User Management](#user-management)
-    + [Time](#time)
     + [Sensor](#sensor)
   * [IPMI / DCMI](#ipmi---dcmi)
     + [SOL IPMI](#sol-ipmi)
-    + [Message Bridging](#message-bridging)
-  * [JTAG master](#jtag-master)
 - [IPMI Comamnds Verified](#ipmi-comamnds-verified)
 - [Modifications](#modifications)
 
@@ -75,7 +49,7 @@ BBLAYERS ?= " \
 ### OBMC iKVM
 <img align="right" width="30%" src="https://cdn.rawgit.com/NTC-CCBG/snapshots/e8178eef/openbmc/kvm.png">
 
-This is a Virtual Network Computing (VNC) server programm using our modified [LibVNCServer](https://github.com/Nuvoton-Israel/libvncserver).
+This is a Virtual Network Computing (VNC) server programm using [LibVNCServer](https://github.com/LibVNC/libvncserver).
 1. Support Video Capture and Differentiation(VCD), compares frame by hardware.
 2. Support Encoding Compression Engine(ECE), 16-bit hextile compression hardware encoding.
 3. Support USB HID, support Keyboard and Mouse.
@@ -88,7 +62,6 @@ The VNC viewer also enabled in webui with below patches.
 **Source URL**
 
 * [https://github.com/Nuvoton-Israel/obmc-ikvm](https://github.com/Nuvoton-Israel/obmc-ikvm)
-* [https://github.com/Nuvoton-Israel/libvncserver](https://github.com/Nuvoton-Israel/libvncserver)
 
 **How to use**
 
@@ -104,7 +77,11 @@ The VNC viewer also enabled in webui with below patches.
 6. Make sure the network is connected with your workstation.
 7. Launch a browser in your workstation and you will see the entry page.
     ```
+    /* python web server */
     https://<poelg ip>
+    
+    /* bmcweb */
+    https://<poelg ip>:833
     ```
 8. Login to OpenBMC home page
     ```
@@ -112,9 +89,12 @@ The VNC viewer also enabled in webui with below patches.
     Password: 0penBmc
     ```
 9. Navigate to KVM viewer page
-
     ```
+    /* python web server */
     https://<poelg ip>/#kvm
+    
+    /* bmcweb */
+    https://<poelg ip>:833/#kvm   
     ```
 
 **Maintainer**
