@@ -748,10 +748,10 @@ It's verified with Nuvoton's NPCM750 solution (which is referred as Poleg here) 
 | Enable Forwarded Commands |  |  | . |
 
 # Image Size
-* image-uboot: 457 KB
-* image-kernel: 4 MB
-* image-rofs: 20 MB
-* image-rwfs: 0 KB
+| image-uboot |  457 KB | 
+| image-kernel |  4 MB | 
+| image-rofs |  20 MB | 
+| image-rwfs |  0 KB | 
 
 # Modifications
 
