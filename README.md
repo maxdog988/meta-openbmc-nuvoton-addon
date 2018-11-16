@@ -1,7 +1,11 @@
-# meta-openbmc-nuvoton-addon
-This README file contains information on the contents of the meta-openbmc-nuvoton-addon layer.
+# Nuvoton NPCM750 Evaluation Board
+================
 
-Please see the corresponding sections below for details.
+This is the Nuvoton NPCM750 evaluation board layer.
+The NPCM750 is an ARM based SoC with external DDR RAM and
+supports a large set of peripherals made by Nuvoton.
+More information about the NPCM7XX can be found
+[here](http://www.nuvoton.com/hq/products/cloud-computing/ibmc/?__locale=en).
 
 - Work with [NTIL linux 4.17.04 for Poleg](https://github.com/Nuvoton-Israel/linux/tree/Poleg-4.17.04-OpenBMC "NTIL")
 
@@ -11,14 +15,17 @@ Please see the corresponding sections below for details.
 This layer depends on:
 
 ```
-  URI: git@github.com:openbmc/openbmc
+  URI: git@github.com:Nuvoton-Israel/openbmc
   branch: master
 ```
 
 # Contacts for Patches
 
-Please submit any patches against the meta-openbmc-nuvoton-addon layer to the maintainer of nuvoton:
+Please submit any patches against the NPCM750 evaluation board layer to the maintainer of nuvoton:
 
+* Avi Fishman, <avi.fishman@nuvoton.com> 
+* Tomer Mainmon, <tomer.maimon@nuvoton.com>
+* Oshri Alkob, <oshri.alkoby@nuvoton.com>
 * Joseph Liu, <KWLIU@nuvoton.com>
 * Medad CChien, <CTCCHIEN@nuvoton.com>
 * Tyrone Ting, <KFTING@nuvoton.com>
