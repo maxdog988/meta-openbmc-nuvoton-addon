@@ -747,6 +747,12 @@ It's verified with Nuvoton's NPCM750 solution (which is referred as Poleg here) 
 | Get Forwarded Commands |  |  |  |
 | Enable Forwarded Commands |  |  | . |
 
+# Image Size
+* image-uboot: 457 KB
+* image-kernel: 4 MB
+* image-rofs: 20 MB
+* image-rwfs: 0 KB
+
 # Modifications
 
 * 2018.07.23 First release Remote-KVM
