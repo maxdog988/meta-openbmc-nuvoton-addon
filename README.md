@@ -42,7 +42,7 @@ Please submit any patches against the NPCM750 evaluation board layer to the main
     + [User Management](#user-management)
     + [Time](#time)
     + [Sensor](#sensor)
-  * [IPMI / DCMI](#ipmi-/-dcmi)
+  * [IPMI / DCMI](#ipmi--dcmi)
     + [SOL IPMI](#sol-ipmi)
 - [IPMI Comamnds Verified](#ipmi-comamnds-verified)
 - [Modifications](#modifications)
