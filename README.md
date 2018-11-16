@@ -753,7 +753,7 @@ It's verified with Nuvoton's NPCM750 solution (which is referred as Poleg here) 
 | image-uboot |  457 KB | including bootblock for Poleg only|
 | image-kernel |  4 MB | linux 4.17 version |
 | image-rofs |  20 MB | bottom layer of the overlayfs, read only |
-| image-rwfs |  0 KB | middle layer of the overlayfs, releated files in this partition will be created at runtime |
+| image-rwfs |  0 KB | middle layer of the overlayfs, r/w files in this partition will be created at runtime and overwite ro files in image-rofs |
 
 # Modifications
 
