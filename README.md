@@ -753,7 +753,7 @@ Type          | Size    | Note                                                  
 image-uboot   |  457 KB | including bootblock for Poleg only                                                                       |
 image-kernel  |  4 MB   | linux 4.17 version                                                                                       |
 image-rofs    |  20 MB  | bottom layer of the overlayfs, read only                                                                 |
-image-rwfs    |  0 KB  | middle layer of the overlayf |
+image-rwfs    |  0 MB  | middle layer of the overlayfs, rw files in this partition will be created at runtime,<br /> maximum size 1MB|
 
 # Modifications
 
