@@ -10,6 +10,7 @@ More information about the NPCM7XX can be found
 
 # Dependencies
 ![](https://cdn.rawgit.com/maxdog988/icons/61485d57/label_openbmc_ver_master.svg)
+![](https://cdn.rawgit.com/maxdog988/icons/master/label_linux_ver_4.13.05.svg)
 
 This layer depends on:
 
