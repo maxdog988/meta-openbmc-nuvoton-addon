@@ -45,6 +45,7 @@ Please submit any patches against the NPCM750 evaluation board layer to the main
   * [IPMI / DCMI](#ipmi--dcmi)
     + [SOL IPMI](#sol-ipmi)
 - [IPMI Comamnds Verified](#ipmi-comamnds-verified)
+- [Image Size](#image-size)
 - [Modifications](#modifications)
 
 # Enabled Features
