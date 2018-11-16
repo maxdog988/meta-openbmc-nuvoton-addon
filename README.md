@@ -748,12 +748,12 @@ It's verified with Nuvoton's NPCM750 solution (which is referred as Poleg here) 
 | Enable Forwarded Commands |  |  | . |
 
 # Image Size
-| Type | Size | 
-| :--- | :---: |
-| image-uboot |  457 KB | 
-| image-kernel |  4 MB | 
-| image-rofs |  20 MB | 
-| image-rwfs |  0 KB | 
+| Type | Size | Note |
+| :--- | :---: |  :---: | |
+| image-uboot |  457 KB | including bootblock for Poleg only|
+| image-kernel |  4 MB | linux 4.17 version |
+| image-rofs |  20 MB | bottom layer of the overlayfs, read only |
+| image-rwfs |  0 KB | middle layer of the overlayfs, releated files in image will be created at runtime |
 
 # Modifications
 
