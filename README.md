@@ -759,3 +759,4 @@ It's verified with Nuvoton's NPCM750 solution (which is referred as Poleg here) 
 * 2018.09.21 Add NTP screen snapshot for System/Time/SNTP
 * 2018.10.05 Update webui and  patch of webui and interface and vm-own.png
 * 2018.10.11 Add Sensor
+* 2018.11.16 Add obmc-ikvm support in bmcweb 
