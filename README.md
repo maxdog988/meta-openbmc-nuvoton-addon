@@ -655,6 +655,21 @@ It's verified with Nuvoton's NPCM750 solution (which is referred as Poleg here) 
 * Tyrone Ting
 * Stanley Chu
 
+# Features In Progressing
+* User management
+* Host power control/monitor
+* JTAG - FPGA/CPLD Programing
+* Verified Boot - Kernel/ROFS verification
+* Remote USB- Standalone VM application
+* Remote KVM - V4L2 for KVM
+
+# Features Planned
+* Improve sensor/event framework
+* Host firmware update
+* FRU implementation
+* Boot control
+* Red fish
+
 # IPMI Comamnds Verified
 
 | Command | KCS | RMCP+ | IPMB |
