@@ -36,9 +36,9 @@ Please submit any patches against the NPCM750 evaluation board layer to the main
 - [Contacts for Patches](#contacts-for-patches)
 - [Features of NPCM750 Evaluation Board](#features-of-npcm750-evaluation-board)
   * [WebUI](#webui)
-    + [OBMC iKVM](#obmc-ikvm)
-    + [SOL](#sol)
-    + [VM](#vm)
+    + [Remote KVM](#remote-kvm)
+    + [Serial Over Lan](#serial-over-lan)
+    + [Remote Virtual Media](#remote-virtual-media)
     + [BMC Firmware Update](#bmc-firmware-update)
   * [System](#system)
     + [Time](#time)
@@ -56,7 +56,7 @@ Please submit any patches against the NPCM750 evaluation board layer to the main
 
 ## WebUI
 
-### OBMC iKVM
+### Remote KVM
 <img align="right" width="30%" src="https://cdn.rawgit.com/NTC-CCBG/snapshots/e8178eef/openbmc/kvm.png">
 
 This is a Virtual Network Computing (VNC) server programm using [LibVNCServer](https://github.com/LibVNC/libvncserver).
@@ -113,7 +113,7 @@ The VNC viewer also enabled in webui with below patches.
 
 * Joseph Liu
 
-### SOL
+### Serial Over Lan
 <img align="right" width="30%" src="https://cdn.rawgit.com/NTC-CCBG/snapshots/e8178eef/openbmc/sol-webui.png">
 
 The Serial over LAN (SoL) console redirects the output of the server’s serial port to a browser window on your workstation.
@@ -219,7 +219,7 @@ It's verified with Nuvoton's NPCM750 solution (which is referred as Poleg here) 
 
 * Tyrone Ting
 
-### VM
+### Remote Virtual Media
 <img align="right" width="30%" src="https://cdn.rawgit.com/NTC-CCBG/snapshots/1ecfa33/openbmc/vm-own.png">
 
 Virtual Media (VM) is to emulate an USB drive on remote host PC via Network Block Device(NBD) and Mass Storage(MSTG).
