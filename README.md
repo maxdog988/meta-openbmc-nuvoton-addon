@@ -46,10 +46,10 @@ Please submit any patches against the NPCM750 evaluation board layer to the main
     + [LED](#led)
   * [IPMI / DCMI](#ipmi--dcmi)
     + [SOL IPMI](#sol-ipmi)
-- [Features In Progressing](#features-in-profressing)
-- [Features In Planning](#features-in-planning)
 - [IPMI Comamnds Verified](#ipmi-comamnds-verified)
 - [Image Size](#image-size)
+- [Features In Progressing](#features-in-profressing)
+- [Features In Planning](#features-in-planning)
 - [Modifications](#modifications)
 
 # Enabled Features
@@ -825,6 +825,16 @@ image-uboot   |  457 KB | including bootblock for Poleg only                    
 image-kernel  |  4 MB   | linux 4.17 version                                                                                       |
 image-rofs    |  20 MB  | bottom layer of the overlayfs, read only                                                                 |
 image-rwfs    |  0 MB  | middle layer of the overlayfs, rw files in this partition will be created at runtime,<br /> with a maximum capacity of 1MB|
+
+# Features In Progressing
+* Host power control and mointer
+* User management
+* FPGA/CPLD Programing by JTAG
+* Standalone VM application
+* V4L2 for KVM
+* Kernel/ROFS verification
+
+# Features In Planing
 
 # Modifications
 
