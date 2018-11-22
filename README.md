@@ -596,7 +596,8 @@ Turning on ServerLED will make **hearbeat** and **identify** leds on EVB start b
 
 **Maintainer**
 
-* Stanley Chu 
+* Oshri Alkob
+* Stanley Chu
 
 
 ## IPMI / DCMI
