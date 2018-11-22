@@ -39,13 +39,15 @@ Please submit any patches against the NPCM750 evaluation board layer to the main
     + [OBMC iKVM](#obmc-ikvm)
     + [SOL](#sol)
     + [VM](#vm)
-    + [Firmware Update](#firmware-update)
+    + [BMC Firmware Update](#bmc-firmware-update)
   * [System](#system)
     + [Time](#time)
     + [Sensor](#sensor)
     + [LED](#led)
   * [IPMI / DCMI](#ipmi--dcmi)
     + [SOL IPMI](#sol-ipmi)
+- [Features In Progressing](#features-in-profressing)
+- [Features In Planning](#features-in-planning)
 - [IPMI Comamnds Verified](#ipmi-comamnds-verified)
 - [Image Size](#image-size)
 - [Modifications](#modifications)
@@ -259,7 +261,7 @@ Virtual Media (VM) is to emulate an USB drive on remote host PC via Network Bloc
 **Maintainer**
 * Medad CChien
 
-### Firmware Update
+### BMC Firmware Update
 <img align="right" width="30%" src="https://cdn.rawgit.com/NTC-CCBG/snapshots/0f22742/openbmc/firmware-update.png">
 
 Virtual Media (VM) is to emulate an USB drive on remote host PC via Network Block Device(NBD) and Mass Storage(MSTG).
