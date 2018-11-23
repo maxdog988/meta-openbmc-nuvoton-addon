@@ -51,7 +51,7 @@ Please submit any patches against the NPCM750 evaluation board layer to the main
 - [IPMI Comamnds Verified](#ipmi-comamnds-verified)
 - [Image Size](#image-size)
 - [Modifications](#modifications)
-- [Features of OpenBMC] (#features-of-openbmc)
+- [Features of OpenBMC](#features-of-openbmc)
 
 # Features of NPCM750 Evaluation Board
 
