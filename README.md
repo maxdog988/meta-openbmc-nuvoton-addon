@@ -51,6 +51,7 @@ Please submit any patches against the NPCM750 evaluation board layer to the main
 - [IPMI Comamnds Verified](#ipmi-comamnds-verified)
 - [Image Size](#image-size)
 - [Modifications](#modifications)
+- [Features of OpenBMC] (#features-of-openbmc)
 
 # Features of NPCM750 Evaluation Board
 
@@ -842,6 +843,24 @@ image-kernel  |  4 MB   | linux 4.17 version                                    
 image-rofs    |  20 MB  | bottom layer of the overlayfs, read only                                                                 |
 image-rwfs    |  0 MB  | middle layer of the overlayfs, rw files in this partition will be created at runtime,<br /> with a maximum capacity of 1MB|
 
+# Modifications
+
+* 2018.07.23 First release Remote-KVM
+* 2018.08.02 First release SOL
+* 2018.08.07 Modify Readme.md for adding description about SOL How to use
+* 2018.09.07 Update SOL for WebUI and IPMI
+* 2018.09.10 Update System/Time/SNTP
+* 2018.09.12 Update IPMI Comamnds Verified Table
+* 2018.09.13 Update Time settings of System/Time
+* 2018.09.13 Update obmc-ikvm part for WebUI
+* 2018.09.14 First release VM
+* 2018.09.14 Update IPMI Commands Verified Table
+* 2018.09.21 Add NTP screen snapshot for System/Time/SNTP
+* 2018.10.05 Update webui and  patch of webui and interface and vm-own.png
+* 2018.10.11 Add Sensor
+* 2018.11.16 Add obmc-ikvm support in bmcweb 
+* 2018.11.22 Enable firmware update support 
+
 ## Features of OpenBMC
 
 **Feature List**
@@ -873,21 +892,3 @@ image-rwfs    |  0 MB  | middle layer of the overlayfs, rw files in this partiti
 * Remote USB
 * OpenStack Ironic Integration
 * QEMU enhancements
-
-# Modifications
-
-* 2018.07.23 First release Remote-KVM
-* 2018.08.02 First release SOL
-* 2018.08.07 Modify Readme.md for adding description about SOL How to use
-* 2018.09.07 Update SOL for WebUI and IPMI
-* 2018.09.10 Update System/Time/SNTP
-* 2018.09.12 Update IPMI Comamnds Verified Table
-* 2018.09.13 Update Time settings of System/Time
-* 2018.09.13 Update obmc-ikvm part for WebUI
-* 2018.09.14 First release VM
-* 2018.09.14 Update IPMI Commands Verified Table
-* 2018.09.21 Add NTP screen snapshot for System/Time/SNTP
-* 2018.10.05 Update webui and  patch of webui and interface and vm-own.png
-* 2018.10.11 Add Sensor
-* 2018.11.16 Add obmc-ikvm support in bmcweb 
-* 2018.11.22 Enable firmware update support 
