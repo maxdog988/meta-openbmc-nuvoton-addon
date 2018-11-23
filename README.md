@@ -865,20 +865,22 @@ image-rwfs    |  0 MB  | middle layer of the overlayfs, rw files in this partiti
 
 ## Features of OpenBMC
 
-**Feature List**
-* REST Management
-* IPMI
-* SSH based SOL
-* Power and Cooling Management
-* Event Logs
-* Zeroconf discoverable
-* Sensors
-* Inventory
-* LED Management
-* Host Watchdog
-* Simulation
-* Code Update Support for multiple BMC/BIOS images
-* POWER On Chip Controller (OCC) Support
+| Feature | Verified | In Progress | Note |
+| :--- | :---: | :---: | :---: |
+| **Feature List** | | | |
+| REST Management | | | |
+| IPMI | | | |
+| SSH based SOL | | | |
+| Power and Cooling Management | | | |
+| Event Logs | | | |
+| Zeroconf discoverable | | | |
+| Sensors | | | |
+| Inventory | | | |
+| LED Management | | | |
+| Host Watchdog | | | |
+| Simulation | | | |
+| Code Update Support for multiple BMC/BIOS images | | | |
+| POWER On Chip Controller (OCC) Support | | | |
 
 **Features In Progress**
 * Full IPMI 2.0 Compliance with DCMI
