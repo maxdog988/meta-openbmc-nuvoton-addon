@@ -672,6 +672,8 @@ It's verified with Nuvoton's NPCM750 solution (which is referred as Poleg here) 
 * Boot control
 * Red fish
 
+
+
 # IPMI Comamnds Verified
 
 | Command | KCS | RMCP+ | IPMB |
