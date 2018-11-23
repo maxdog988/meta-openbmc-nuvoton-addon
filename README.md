@@ -46,8 +46,8 @@ Please submit any patches against the NPCM750 evaluation board layer to the main
     + [LED](#led)
   * [IPMI / DCMI](#ipmi--dcmi)
     + [SOL IPMI](#sol-ipmi)
-- [Features In Progressing](#features-in-progressing)
-- [Features Planned](#features-planned)
+  * [Features In Progressing](#features-in-progressing)
+  * [Features Planned](#features-planned)
 - [IPMI Comamnds Verified](#ipmi-comamnds-verified)
 - [Image Size](#image-size)
 - [Modifications](#modifications)
@@ -657,7 +657,7 @@ It's verified with Nuvoton's NPCM750 solution (which is referred as Poleg here) 
 * Tyrone Ting
 * Stanley Chu
 
-# Features In Progressing
+## Features In Progressing
 * User management
 * Host power control/monitor
 * JTAG - FPGA/CPLD Programing
@@ -665,7 +665,7 @@ It's verified with Nuvoton's NPCM750 solution (which is referred as Poleg here) 
 * Remote USB- Standalone VM application
 * Remote KVM - V4L2 for KVM
 
-# Features Planned
+## Features Planned
 * Improve sensor/event framework
 * Host firmware update
 * FRU implementation
