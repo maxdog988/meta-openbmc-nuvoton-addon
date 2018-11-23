@@ -865,7 +865,7 @@ image-rwfs    |  0 MB  | middle layer of the overlayfs, rw files in this partiti
 
 ## Features of OpenBMC
 
-| Feature | Verified | In Progress | Note |
+|  | Verified | In Progress | Note |
 | :--- | :---: | :---: | :---: |
 | **Feature List** | | | |
 | REST Management | | | |
@@ -881,18 +881,16 @@ image-rwfs    |  0 MB  | middle layer of the overlayfs, rw files in this partiti
 | Simulation | | | |
 | Code Update Support for multiple BMC/BIOS images | | | |
 | POWER On Chip Controller (OCC) Support | | | |
-
-**Features In Progress**
-* Full IPMI 2.0 Compliance with DCMI
-* Verified Boot
-* HTML5 Java Script Web User Interface
-* BMC RAS
-
-**Features Requested but need help**
-* OpenCompute Redfish Compliance
-* OpenBMC performance monitoring
-* cgroup user management and policies
-* Remote KVM
-* Remote USB
-* OpenStack Ironic Integration
-* QEMU enhancements
+| **Features In Progress** ||||
+| Full IPMI 2.0 Compliance with DCMI||||
+| Verified Boot||||
+| HTML5 Java Script Web User Interface||||
+| BMC RAS||||
+| **Features Requested but need help**||||
+| OpenCompute Redfish Compliance||||
+| OpenBMC performance monitoring||||
+| cgroup user management and policies||||
+| Remote KVM||||
+| Remote USB||||
+| OpenStack Ironic Integration||||
+| QEMU enhancements||||
