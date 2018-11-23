@@ -842,6 +842,38 @@ image-kernel  |  4 MB   | linux 4.17 version                                    
 image-rofs    |  20 MB  | bottom layer of the overlayfs, read only                                                                 |
 image-rwfs    |  0 MB  | middle layer of the overlayfs, rw files in this partition will be created at runtime,<br /> with a maximum capacity of 1MB|
 
+## Features of OpenBMC
+
+**Feature List**
+* REST Management
+* IPMI
+* SSH based SOL
+* Power and Cooling Management
+* Event Logs
+* Zeroconf discoverable
+* Sensors
+* Inventory
+* LED Management
+* Host Watchdog
+* Simulation
+* Code Update Support for multiple BMC/BIOS images
+* POWER On Chip Controller (OCC) Support
+
+**Features In Progress**
+* Full IPMI 2.0 Compliance with DCMI
+* Verified Boot
+* HTML5 Java Script Web User Interface
+* BMC RAS
+
+**Features Requested but need help**
+* OpenCompute Redfish Compliance
+* OpenBMC performance monitoring
+* cgroup user management and policies
+* Remote KVM
+* Remote USB
+* OpenStack Ironic Integration
+* QEMU enhancements
+
 # Modifications
 
 * 2018.07.23 First release Remote-KVM
