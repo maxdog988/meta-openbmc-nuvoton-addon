@@ -110,6 +110,20 @@ The VNC viewer also enabled in webui with below patches.
     /* bmcweb */
     https://<poelg ip>:833/#kvm   
     ```
+**Performance**
+
+Performance tested by playing video
+Data format: Hextie 16
+Video differentiation: Enable
+VNC viewer: Real VNC viewer
+Framework: OpenBMC
+
+host resolution    | fps    |
+:-------------|:------- |
+800x600   |  30 fps |
+1024x768  |  23 fps   |
+1280x1024   |  16 fps  
+1600x1200   |  14 fps  |
 
 **Maintainer**
 
