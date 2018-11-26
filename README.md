@@ -113,7 +113,7 @@ The VNC viewer also enabled in webui with below patches.
 **Performance**
 
 * Performance tested by playing video
-* VNC viewer: Real VNC viewer
+* VNC viewer: [Real VNC viewer](https://www.realvnc.com/en/connect/download/viewer/)
 
 Host Resolution    | FPS    |
 :-------------|:------- |
