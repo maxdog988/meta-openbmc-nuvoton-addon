@@ -112,13 +112,13 @@ The VNC viewer also enabled in webui with below patches.
     ```
 **Performance**
 
-Performance tested by playing video
-Data format: Hextie 16
-Video differentiation: Enable
-VNC viewer: Real VNC viewer
-Framework: OpenBMC
+* Performance tested by playing video
+* Data format: Hextie 16
+* Video differentiation: Enable
+* VNC viewer: Real VNC viewer
+* Framework: OpenBMC
 
-host resolution    | fps    |
+Host Resolution    | FPS    |
 :-------------|:------- |
 800x600   |  30 fps |
 1024x768  |  23 fps   |
