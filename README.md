@@ -23,7 +23,7 @@ This layer depends on:
 
 Please submit any patches against the NPCM750 evaluation board layer to the maintainer of nuvoton:
 
-* Oshri Alkob, <oshri.alkoby@nuvoton.com>
+* Oshri Alkoby, <oshri.alkoby@nuvoton.com>
 * Joseph Liu, <KWLIU@nuvoton.com>
 * Medad CChien, <CTCCHIEN@nuvoton.com>
 * Tyrone Ting, <KFTING@nuvoton.com>
@@ -609,7 +609,7 @@ Turning on ServerLED will make **hearbeat** and **identify** leds on EVB start b
 
 **Maintainer**
 
-* Oshri Alkob
+* Oshri Alkoby
 * Stanley Chu
 
 
@@ -641,7 +641,7 @@ Default Web-UI only show one Fan Tach Fan1, and Poleg support four Fan Tach. Thu
       We can set pwm value (0-255) for pwm1-3, and 6 to control FAN1-4 RPMS value by echo command and the result will show on Web-UI
 
 **Maintainer**  
-* Oshri Alkob
+* Oshri Alkoby
 * Tim Lee
 
 
